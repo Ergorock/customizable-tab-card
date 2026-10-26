@@ -6,6 +6,170 @@
 
 const CARD_VERSION = "1.0.0";
 
+const STRINGS = {
+  en: {
+    card_description: "Groups cards into customizable tabs (style, colors, icons).",
+    tab_n: "Tab {n}",
+    card_error: "Card “{type}”: {error}",
+    stub_living: "Living room",
+    stub_kitchen: "Kitchen",
+    stub_content: "Content of the **{name}** tab",
+    tabs_required: "The card needs a “tabs” list",
+    no_cards: "No cards in this tab",
+    add_tab_hint: "Add a tab in the card editor.",
+    label_title: "Tab title",
+    label_icon: "Icon",
+    label_color: "Tab color",
+    label_layout: "Card layout",
+    label_columns: "Number of columns",
+    label_style: "Tab style",
+    label_position: "Bar position",
+    label_alignment: "Alignment",
+    label_display: "Tab content",
+    label_size: "Size",
+    label_animation: "Animation",
+    label_accent_color: "Active tab color",
+    label_inactive_color: "Inactive tab color",
+    label_bar_background: "Bar background",
+    label_default_tab: "Tab open by default",
+    label_tint_inactive: "Tint inactive tabs",
+    label_swipe: "Swipe to change tab",
+    label_remember_tab: "Remember last tab",
+    label_card_background: "Wrap in a card",
+    layout_vertical: "Stacked",
+    layout_horizontal: "Side by side",
+    layout_grid: "Grid",
+    style_underline: "Underlined",
+    style_pills: "Pills",
+    style_segmented: "Segmented",
+    style_boxed: "Folder",
+    position_top: "Top",
+    position_bottom: "Bottom",
+    position_left: "Left",
+    position_right: "Right",
+    alignment_start: "Start",
+    alignment_center: "Centered",
+    alignment_end: "End",
+    alignment_stretch: "Full width",
+    display_icon_label: "Icon + text",
+    display_icon_above: "Icon above text",
+    display_icon: "Icon only",
+    display_label: "Text only",
+    size_small: "Small",
+    size_medium: "Medium",
+    size_large: "Large",
+    animation_none: "None",
+    animation_fade: "Fade",
+    animation_slide: "Slide",
+    tabs: "Tabs",
+    move_tab_left: "Move tab left",
+    move_tab_right: "Move tab right",
+    duplicate_tab: "Duplicate tab",
+    delete_tab: "Delete tab",
+    tab_cards: "Cards in this tab",
+    move_card_before: "Move card before",
+    move_card_after: "Move card after",
+    move_card_to: "Move card to another tab",
+    show_code_editor: "Show code editor",
+    show_visual_editor: "Show visual editor",
+    duplicate_card: "Duplicate card",
+    delete_card: "Delete card",
+    appearance: "Appearance",
+    add_tab: "Add a tab",
+    add_card: "Add a card",
+    move_to: "Move to…",
+    editor_load_failed: "The Home Assistant card editor could not be loaded. Use the code editor.",
+    editor_loading: "Loading the card editor…",
+    copy_suffix: "{name} (copy)",
+    confirm_delete_tab: "Delete tab “{name}” and its {n} card(s)?",
+  },
+  fr: {
+    card_description: "Regroupe des cartes dans des onglets personnalisables (style, couleurs, icônes).",
+    tab_n: "Onglet {n}",
+    card_error: "Carte « {type} » : {error}",
+    stub_living: "Salon",
+    stub_kitchen: "Cuisine",
+    stub_content: "Contenu de l'onglet **{name}**",
+    tabs_required: "La carte doit contenir une liste « tabs »",
+    no_cards: "Aucune carte dans cet onglet",
+    add_tab_hint: "Ajoutez un onglet dans l'éditeur de la carte.",
+    label_title: "Titre de l'onglet",
+    label_icon: "Icône",
+    label_color: "Couleur de l'onglet",
+    label_layout: "Disposition des cartes",
+    label_columns: "Nombre de colonnes",
+    label_style: "Style des onglets",
+    label_position: "Position de la barre",
+    label_alignment: "Alignement",
+    label_display: "Contenu des onglets",
+    label_size: "Taille",
+    label_animation: "Animation",
+    label_accent_color: "Couleur de l'onglet actif",
+    label_inactive_color: "Couleur des onglets inactifs",
+    label_bar_background: "Fond de la barre",
+    label_default_tab: "Onglet ouvert par défaut",
+    label_tint_inactive: "Colorer les onglets inactifs",
+    label_swipe: "Changer d'onglet par balayage",
+    label_remember_tab: "Mémoriser le dernier onglet",
+    label_card_background: "Encadrer dans une carte",
+    layout_vertical: "Empilées",
+    layout_horizontal: "Côte à côte",
+    layout_grid: "Grille",
+    style_underline: "Soulignés",
+    style_pills: "Pastilles",
+    style_segmented: "Segmentés",
+    style_boxed: "Classeur",
+    position_top: "En haut",
+    position_bottom: "En bas",
+    position_left: "À gauche",
+    position_right: "À droite",
+    alignment_start: "Début",
+    alignment_center: "Centré",
+    alignment_end: "Fin",
+    alignment_stretch: "Pleine largeur",
+    display_icon_label: "Icône + texte",
+    display_icon_above: "Icône au-dessus du texte",
+    display_icon: "Icône seule",
+    display_label: "Texte seul",
+    size_small: "Petite",
+    size_medium: "Moyenne",
+    size_large: "Grande",
+    animation_none: "Aucune",
+    animation_fade: "Fondu",
+    animation_slide: "Glissement",
+    tabs: "Onglets",
+    move_tab_left: "Déplacer l'onglet à gauche",
+    move_tab_right: "Déplacer l'onglet à droite",
+    duplicate_tab: "Dupliquer l'onglet",
+    delete_tab: "Supprimer l'onglet",
+    tab_cards: "Cartes de l'onglet",
+    move_card_before: "Déplacer la carte avant",
+    move_card_after: "Déplacer la carte après",
+    move_card_to: "Déplacer la carte vers un autre onglet",
+    show_code_editor: "Afficher l'éditeur de code",
+    show_visual_editor: "Afficher l'éditeur visuel",
+    duplicate_card: "Dupliquer la carte",
+    delete_card: "Supprimer la carte",
+    appearance: "Apparence",
+    add_tab: "Ajouter un onglet",
+    add_card: "Ajouter une carte",
+    move_to: "Déplacer vers…",
+    editor_load_failed: "L'éditeur de cartes de Home Assistant n'a pas pu être chargé. Utilisez l'éditeur de code.",
+    editor_loading: "Chargement de l'éditeur de cartes…",
+    copy_suffix: "{name} (copie)",
+    confirm_delete_tab: "Supprimer l'onglet « {name} » et ses {n} carte(s) ?",
+  },
+};
+
+// Langue de l'interface : celle de Home Assistant (français ou anglais, anglais par défaut)
+let lang = (navigator.language || "").startsWith("fr") ? "fr" : "en";
+const setLang = (hass) => {
+  const l = hass?.locale?.language || hass?.language;
+  if (l) lang = l.startsWith("fr") ? "fr" : "en";
+};
+const tr = (key, vars = {}) =>
+  (STRINGS[lang][key] ?? STRINGS.en[key] ?? key).replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? "");
+
 const DEFAULTS = {
   style: "underline",
   position: "top",
@@ -74,7 +238,7 @@ const fallbackCard = (conf) => {
   } catch (e) {
     const el = document.createElement("div");
     el.className = "error";
-    el.textContent = `Carte « ${type} » : ${e.message}`;
+    el.textContent = tr("card_error", { type, error: e.message });
     return el;
   }
 };
@@ -87,11 +251,14 @@ class TabCard extends HTMLElement {
     return document.createElement("customizable-tab-card-editor");
   }
 
-  static getStubConfig() {
+  static getStubConfig(hass) {
+    setLang(hass);
+    const living = tr("stub_living");
+    const kitchen = tr("stub_kitchen");
     return {
       tabs: [
-        { title: "Salon", icon: "mdi:sofa", cards: [{ type: "markdown", content: "Contenu de l'onglet **Salon**" }] },
-        { title: "Cuisine", icon: "mdi:silverware-fork-knife", cards: [{ type: "markdown", content: "Contenu de l'onglet **Cuisine**" }] },
+        { title: living, icon: "mdi:sofa", cards: [{ type: "markdown", content: tr("stub_content", { name: living }) }] },
+        { title: kitchen, icon: "mdi:silverware-fork-knife", cards: [{ type: "markdown", content: tr("stub_content", { name: kitchen }) }] },
       ],
     };
   }
@@ -107,7 +274,7 @@ class TabCard extends HTMLElement {
   }
 
   setConfig(config) {
-    if (!config || !Array.isArray(config.tabs)) throw new Error("La carte doit contenir une liste « tabs »");
+    if (!config || !Array.isArray(config.tabs)) throw new Error(tr("tabs_required"));
     this._config = { ...DEFAULTS, ...config, tabs: normalizeTabs(config.tabs) };
     // Garde les cartes déjà créées pour les réutiliser si leur config n'a pas changé
     this._pool = new Map();
@@ -129,6 +296,7 @@ class TabCard extends HTMLElement {
 
   set hass(hass) {
     this._hass = hass;
+    setLang(hass);
     (this._cards[this._activeIndex()] || []).forEach((el) => (el.hass = hass));
   }
 
@@ -274,7 +442,7 @@ class TabCard extends HTMLElement {
     const tabs = c.tabs.map((t, i) => {
       const showIcon = t.icon && c.display !== "label";
       const showLabel = !(c.display === "icon" && t.icon);
-      const label = t.title || `Onglet ${i + 1}`;
+      const label = t.title || tr("tab_n", { n: i + 1 });
       return `
         <button class="tab" role="tab" id="tab-${i}" data-index="${i}" aria-controls="panel-${i}"
           aria-selected="${i === active}" tabindex="${i === active ? 0 : -1}" title="${esc(label)}"
@@ -288,13 +456,13 @@ class TabCard extends HTMLElement {
     const panels = c.tabs.map((t, i) => `
       <div class="panel layout-${esc(t.layout || "vertical")}" role="tabpanel" id="panel-${i}" aria-labelledby="tab-${i}"
         style="--cols:${Math.max(1, Number(t.columns) || 2)}" ${i === active ? "" : "hidden"}>
-        ${t.cards.length ? "" : `<div class="empty">Aucune carte dans cet onglet</div>`}
+        ${t.cards.length ? "" : `<div class="empty">${tr("no_cards")}</div>`}
       </div>`).join("");
 
     const inner = c.tabs.length
       ? `<div class="bar" role="tablist" aria-orientation="${vertical ? "vertical" : "horizontal"}">${tabs}</div>
          <div class="panels">${panels}</div>`
-      : `<div class="empty">Ajoutez un onglet dans l'éditeur de la carte.</div>`;
+      : `<div class="empty">${tr("add_tab_hint")}</div>`;
 
     this.shadowRoot.innerHTML = `
       <style>${STYLES}</style>
@@ -466,30 +634,8 @@ const STYLES = `
 
 /* ---------------------------- Éditeur visuel ---------------------------- */
 
-const LABELS = {
-  title: "Titre de l'onglet",
-  icon: "Icône",
-  color: "Couleur de l'onglet",
-  layout: "Disposition des cartes",
-  columns: "Nombre de colonnes",
-  style: "Style des onglets",
-  position: "Position de la barre",
-  alignment: "Alignement",
-  display: "Contenu des onglets",
-  size: "Taille",
-  animation: "Animation",
-  accent_color: "Couleur de l'onglet actif",
-  inactive_color: "Couleur des onglets inactifs",
-  bar_background: "Fond de la barre",
-  default_tab: "Onglet ouvert par défaut",
-  tint_inactive: "Colorer les onglets inactifs",
-  swipe: "Changer d'onglet par balayage",
-  remember_tab: "Mémoriser le dernier onglet",
-  card_background: "Encadrer dans une carte",
-};
-
-const options = (o) => Object.entries(o).map(([value, label]) => ({ value, label }));
-const select = (o) => ({ select: { mode: "dropdown", options: options(o) } });
+const select = (name, values) =>
+  ({ select: { mode: "dropdown", options: values.map((value) => ({ value, label: tr(`${name}_${value}`) })) } });
 
 const tabSchema = (tab) => [
   {
@@ -497,7 +643,7 @@ const tabSchema = (tab) => [
       { name: "title", selector: { text: {} } },
       { name: "icon", selector: { icon: {} } },
       { name: "color", selector: { ui_color: {} } },
-      { name: "layout", selector: select({ vertical: "Empilées", horizontal: "Côte à côte", grid: "Grille" }) },
+      { name: "layout", selector: select("layout", ["vertical", "horizontal", "grid"]) },
     ],
   },
   ...(tab.layout === "grid" ? [{ name: "columns", selector: { number: { min: 1, max: 6, mode: "slider" } } }] : []),
@@ -506,12 +652,12 @@ const tabSchema = (tab) => [
 const styleSchema = (count) => [
   {
     type: "grid", name: "", schema: [
-      { name: "style", selector: select({ underline: "Soulignés", pills: "Pastilles", segmented: "Segmentés", boxed: "Classeur" }) },
-      { name: "position", selector: select({ top: "En haut", bottom: "En bas", left: "À gauche", right: "À droite" }) },
-      { name: "alignment", selector: select({ start: "Début", center: "Centré", end: "Fin", stretch: "Pleine largeur" }) },
-      { name: "display", selector: select({ icon_label: "Icône + texte", icon_above: "Icône au-dessus du texte", icon: "Icône seule", label: "Texte seul" }) },
-      { name: "size", selector: select({ small: "Petite", medium: "Moyenne", large: "Grande" }) },
-      { name: "animation", selector: select({ none: "Aucune", fade: "Fondu", slide: "Glissement" }) },
+      { name: "style", selector: select("style", ["underline", "pills", "segmented", "boxed"]) },
+      { name: "position", selector: select("position", ["top", "bottom", "left", "right"]) },
+      { name: "alignment", selector: select("alignment", ["start", "center", "end", "stretch"]) },
+      { name: "display", selector: select("display", ["icon_label", "icon_above", "icon", "label"]) },
+      { name: "size", selector: select("size", ["small", "medium", "large"]) },
+      { name: "animation", selector: select("animation", ["none", "fade", "slide"]) },
     ],
   },
   {
@@ -585,6 +731,7 @@ class TabCardEditor extends HTMLElement {
 
   set hass(hass) {
     this._hass = hass;
+    setLang(hass);
     [this._tabForm, this._styleForm, this._cardEditor, this._picker].forEach((el) => el && (el.hass = hass));
   }
 
@@ -609,33 +756,33 @@ class TabCardEditor extends HTMLElement {
     this.shadowRoot.innerHTML = `
       <style>${EDITOR_STYLES}</style>
       <div class="section">
-        <div class="head"><ha-icon icon="mdi:tab"></ha-icon>Onglets</div>
+        <div class="head"><ha-icon icon="mdi:tab"></ha-icon>${tr("tabs")}</div>
         <div class="chips" id="tabChips"></div>
         <div class="box" id="tabBox">
           <div class="toolbar">
-            ${btn("tab-left", "mdi:arrow-left", "Déplacer l'onglet à gauche")}
-            ${btn("tab-right", "mdi:arrow-right", "Déplacer l'onglet à droite")}
+            ${btn("tab-left", "mdi:arrow-left", tr("move_tab_left"))}
+            ${btn("tab-right", "mdi:arrow-right", tr("move_tab_right"))}
             <span class="spacer"></span>
-            ${btn("tab-copy", "mdi:content-copy", "Dupliquer l'onglet")}
-            ${btn("tab-delete", "mdi:delete", "Supprimer l'onglet", "danger")}
+            ${btn("tab-copy", "mdi:content-copy", tr("duplicate_tab"))}
+            ${btn("tab-delete", "mdi:delete", tr("delete_tab"), "danger")}
           </div>
           <div id="tabFormHost"></div>
-          <div class="subhead"><ha-icon icon="mdi:cards-outline"></ha-icon>Cartes de l'onglet</div>
+          <div class="subhead"><ha-icon icon="mdi:cards-outline"></ha-icon>${tr("tab_cards")}</div>
           <div class="chips small" id="cardChips"></div>
           <div class="toolbar" id="cardToolbar">
-            ${btn("card-left", "mdi:arrow-left", "Déplacer la carte avant")}
-            ${btn("card-right", "mdi:arrow-right", "Déplacer la carte après")}
-            <select id="moveTo" title="Déplacer la carte vers un autre onglet"></select>
+            ${btn("card-left", "mdi:arrow-left", tr("move_card_before"))}
+            ${btn("card-right", "mdi:arrow-right", tr("move_card_after"))}
+            <select id="moveTo" title="${esc(tr("move_card_to"))}"></select>
             <span class="spacer"></span>
-            ${btn("card-mode", "mdi:code-braces", "Afficher l'éditeur de code")}
-            ${btn("card-copy", "mdi:content-copy", "Dupliquer la carte")}
-            ${btn("card-delete", "mdi:delete", "Supprimer la carte", "danger")}
+            ${btn("card-mode", "mdi:code-braces", tr("show_code_editor"))}
+            ${btn("card-copy", "mdi:content-copy", tr("duplicate_card"))}
+            ${btn("card-delete", "mdi:delete", tr("delete_card"), "danger")}
           </div>
           <div id="cardHost"></div>
         </div>
       </div>
       <div class="section">
-        <div class="head"><ha-icon icon="mdi:palette"></ha-icon>Apparence</div>
+        <div class="head"><ha-icon icon="mdi:palette"></ha-icon>${tr("appearance")}</div>
         <div id="styleFormHost"></div>
       </div>`;
 
@@ -666,7 +813,7 @@ class TabCardEditor extends HTMLElement {
 
   _form(onChange) {
     const form = document.createElement("ha-form");
-    form.computeLabel = (s) => LABELS[s.name] || s.name;
+    form.computeLabel = (s) => (STRINGS.en[`label_${s.name}`] ? tr(`label_${s.name}`) : s.name);
     form.addEventListener("value-changed", (ev) => {
       ev.stopPropagation();
       onChange(ev.detail.value);
@@ -690,9 +837,9 @@ class TabCardEditor extends HTMLElement {
       <button class="chip ${i === this._tab ? "selected" : ""}" data-tab="${i}">
         ${t.color ? `<span class="dot" style="background:${esc(cssColor(t.color))}"></span>` : ""}
         ${t.icon ? `<ha-icon icon="${esc(t.icon)}"></ha-icon>` : ""}
-        <span>${esc(t.title || `Onglet ${i + 1}`)}</span>
+        <span>${esc(t.title || tr("tab_n", { n: i + 1 }))}</span>
       </button>`).join("") +
-      `<button class="chip add" data-act="tab-add"><ha-icon icon="mdi:plus"></ha-icon><span>Ajouter un onglet</span></button>`;
+      `<button class="chip add" data-act="tab-add"><ha-icon icon="mdi:plus"></ha-icon><span>${tr("add_tab")}</span></button>`;
 
     $("tabBox").hidden = !tab;
     if (tab) {
@@ -709,14 +856,14 @@ class TabCardEditor extends HTMLElement {
 
       $("cardChips").innerHTML = tab.cards.map((c, i) => `
         <button class="chip ${!picking && i === this._card ? "selected" : ""}" data-card="${i}">${i + 1}. ${esc(cardLabel(c))}</button>`).join("") +
-        `<button class="chip add ${picking ? "selected" : ""}" data-act="card-add"><ha-icon icon="mdi:plus"></ha-icon><span>Ajouter une carte</span></button>`;
+        `<button class="chip add ${picking ? "selected" : ""}" data-act="card-add"><ha-icon icon="mdi:plus"></ha-icon><span>${tr("add_card")}</span></button>`;
 
       $("cardToolbar").hidden = picking;
       $("moveTo").hidden = tabs.length < 2;
-      $("moveTo").innerHTML = `<option value="">Déplacer vers…</option>` +
-        tabs.map((t, i) => (i === this._tab ? "" : `<option value="${i}">${esc(t.title || `Onglet ${i + 1}`)}</option>`)).join("");
+      $("moveTo").innerHTML = `<option value="">${tr("move_to")}</option>` +
+        tabs.map((t, i) => (i === this._tab ? "" : `<option value="${i}">${esc(t.title || tr("tab_n", { n: i + 1 }))}</option>`)).join("");
       const mode = this.shadowRoot.querySelector('[data-act="card-mode"]');
-      const modeTitle = this._guiMode ? "Afficher l'éditeur de code" : "Afficher l'éditeur visuel";
+      const modeTitle = tr(this._guiMode ? "show_code_editor" : "show_visual_editor");
       mode.title = modeTitle;
       mode.setAttribute("aria-label", modeTitle);
       mode.querySelector("ha-icon").setAttribute("icon", this._guiMode ? "mdi:code-braces" : "mdi:list-box-outline");
@@ -731,8 +878,8 @@ class TabCardEditor extends HTMLElement {
     const host = this.shadowRoot.getElementById("cardHost");
     if (this._components !== "ready") {
       host.innerHTML = `<div class="msg">${this._components === "error"
-        ? "L'éditeur de cartes de Home Assistant n'a pas pu être chargé. Utilisez l'éditeur de code."
-        : "Chargement de l'éditeur de cartes…"}</div>`;
+        ? tr("editor_load_failed")
+        : tr("editor_loading")}</div>`;
       return;
     }
     if (picking) {
@@ -796,7 +943,7 @@ class TabCardEditor extends HTMLElement {
     const tab = tabs[this._tab];
     switch (act) {
       case "tab-add":
-        this._commit({ tabs: [...tabs, { title: `Onglet ${tabs.length + 1}`, icon: "mdi:tab", cards: [] }] });
+        this._commit({ tabs: [...tabs, { title: tr("tab_n", { n: tabs.length + 1 }), icon: "mdi:tab", cards: [] }] });
         return this._selectTab(tabs.length);
       case "tab-left":
       case "tab-right": {
@@ -805,13 +952,13 @@ class TabCardEditor extends HTMLElement {
         return this._selectTab(to);
       }
       case "tab-copy": {
-        const copy = { ...clone(tab), title: `${tab.title || `Onglet ${this._tab + 1}`} (copie)` };
+        const copy = { ...clone(tab), title: tr("copy_suffix", { name: tab.title || tr("tab_n", { n: this._tab + 1 }) }) };
         this._commit({ tabs: [...tabs.slice(0, this._tab + 1), copy, ...tabs.slice(this._tab + 1)] });
         return this._selectTab(this._tab + 1);
       }
       case "tab-delete": {
-        const name = tab.title || `Onglet ${this._tab + 1}`;
-        if (tab.cards.length && !window.confirm(`Supprimer l'onglet « ${name} » et ses ${tab.cards.length} carte(s) ?`)) return;
+        const name = tab.title || tr("tab_n", { n: this._tab + 1 });
+        if (tab.cards.length && !window.confirm(tr("confirm_delete_tab", { name, n: tab.cards.length }))) return;
         this._commit({ tabs: tabs.filter((_, i) => i !== this._tab) });
         return this._selectTab(Math.max(0, this._tab - 1));
       }
@@ -951,7 +1098,7 @@ if (!window.customCards.some((c) => c.type === "customizable-tab-card")) {
   window.customCards.push({
     type: "customizable-tab-card",
     name: "Customizable Tab Card",
-    description: "Regroupe des cartes dans des onglets personnalisables (style, couleurs, icônes).",
+    description: tr("card_description"),
     preview: true,
   });
 }

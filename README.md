@@ -1,92 +1,96 @@
 # Customizable Tab Card (`custom:customizable-tab-card`)
 
-Carte Lovelace qui regroupe d'autres cartes dans des onglets, avec un éditeur visuel complet :
-ajout / réorganisation des onglets, choix des cartes de chaque onglet avec le sélecteur de cartes de Home Assistant,
-styles et couleurs des onglets.
+*[Version française](README.fr.md)*
+
+Lovelace card that groups other cards into tabs, with a full visual editor:
+add / reorder tabs, pick each tab's cards with the Home Assistant card picker,
+tab styles and colors.
+
+The interface is available in English and French (it follows the Home Assistant language).
 
 ## Installation
 
-### HACS (dépôt personnalisé)
+### HACS (custom repository)
 
-1. HACS → menu ⋮ → *Dépôts personnalisés* → ajoutez `https://github.com/Ergorock/customizable-tab-card`, catégorie **Dashboard**.
-2. Installez **Customizable Tab Card**, puis rechargez le navigateur.
+1. HACS → ⋮ menu → *Custom repositories* → add `https://github.com/Ergorock/customizable-tab-card`, category **Dashboard**.
+2. Install **Customizable Tab Card**, then reload your browser.
 
-### Manuelle
+### Manual
 
-1. Copiez `customizable-tab-card.js` dans `config/www/customizable-tab-card.js`.
-2. *Paramètres → Tableaux de bord → ⋮ → Ressources* : ajoutez `/local/customizable-tab-card.js?v=1.0.0` (type *Module JavaScript*).
+1. Copy `customizable-tab-card.js` to `config/www/customizable-tab-card.js`.
+2. *Settings → Dashboards → ⋮ → Resources*: add `/local/customizable-tab-card.js?v=1.0.0` (type *JavaScript module*).
 
-Après une mise à jour, faites un rafraîchissement forcé du navigateur (Ctrl+Maj+R).
+After an update, force-refresh your browser (Ctrl+Shift+R).
 
-## Utilisation
+## Usage
 
-Dans un tableau de bord : **Ajouter une carte → Customizable Tab Card**. Tout se règle dans l'éditeur visuel :
+In a dashboard: **Add card → Customizable Tab Card**. Everything is set in the visual editor:
 
-- **Onglets** : cliquez sur un onglet pour le modifier (titre, icône, couleur, disposition des cartes),
-  déplacez-le avec les flèches, dupliquez-le ou supprimez-le. L'onglet sélectionné s'affiche dans la prévisualisation.
-- **Cartes de l'onglet** : « Ajouter une carte » ouvre le sélecteur de cartes de Home Assistant ; chaque carte se modifie
-  avec son propre éditeur (visuel ou code), peut être réordonnée, dupliquée ou déplacée vers un autre onglet.
-- **Apparence** : style, position, couleurs et comportement de la barre d'onglets.
+- **Tabs**: click a tab to edit it (title, icon, color, card layout),
+  move it with the arrows, duplicate or delete it. The selected tab is shown in the preview.
+- **Cards in the tab**: “Add a card” opens the Home Assistant card picker; each card is edited
+  with its own editor (visual or code), and can be reordered, duplicated or moved to another tab.
+- **Appearance**: style, position, colors and behavior of the tab bar.
 
-### Options générales
+### General options
 
-| Option | Défaut | Description |
+| Option | Default | Description |
 |---|---|---|
-| `tabs` | — | Liste des onglets (voir ci-dessous) |
-| `style` | `underline` | `underline` (soulignés), `pills` (pastilles), `segmented` (segmentés) ou `boxed` (classeur) |
-| `position` | `top` | `top`, `bottom`, `left` ou `right` |
-| `alignment` | `start` | `start`, `center`, `end` ou `stretch` (onglets sur toute la largeur) |
-| `display` | `icon_label` | `icon_label`, `icon_above`, `icon` (icône seule) ou `label` (texte seul) |
-| `size` | `medium` | `small`, `medium` ou `large` |
-| `animation` | `fade` | `none`, `fade` ou `slide` |
-| `accent_color` | couleur principale | Couleur de l'onglet actif |
-| `inactive_color` | texte secondaire | Couleur du texte des onglets inactifs |
-| `bar_background` | — | Fond de la barre d'onglets (fond des onglets inactifs en style `boxed`) |
-| `tint_inactive` | `false` | Colore aussi les onglets inactifs avec leur couleur |
-| `default_tab` | `1` | Onglet ouvert au chargement (à partir de 1) |
-| `remember_tab` | `false` | Rouvre le dernier onglet consulté (mémorisé dans le navigateur) |
-| `swipe` | `true` | Change d'onglet par balayage horizontal sur écran tactile |
-| `card_background` | `false` | Encadre la barre et les cartes dans une carte |
-| `id` | — | Identifiant pour `remember_tab` si plusieurs cartes ont les mêmes titres d'onglets |
+| `tabs` | — | List of tabs (see below) |
+| `style` | `underline` | `underline`, `pills`, `segmented` or `boxed` (folder) |
+| `position` | `top` | `top`, `bottom`, `left` or `right` |
+| `alignment` | `start` | `start`, `center`, `end` or `stretch` (tabs across the full width) |
+| `display` | `icon_label` | `icon_label`, `icon_above`, `icon` (icon only) or `label` (text only) |
+| `size` | `medium` | `small`, `medium` or `large` |
+| `animation` | `fade` | `none`, `fade` or `slide` |
+| `accent_color` | primary color | Active tab color |
+| `inactive_color` | secondary text | Text color of inactive tabs |
+| `bar_background` | — | Tab bar background (background of inactive tabs in `boxed` style) |
+| `tint_inactive` | `false` | Also tints inactive tabs with their color |
+| `default_tab` | `1` | Tab open on load (starting at 1) |
+| `remember_tab` | `false` | Reopens the last viewed tab (stored in the browser) |
+| `swipe` | `true` | Changes tab with a horizontal swipe on touch screens |
+| `card_background` | `false` | Wraps the bar and the cards in a card |
+| `id` | — | Identifier for `remember_tab` when several cards have the same tab titles |
 
-### Options d'un onglet
+### Tab options
 
-| Option | Défaut | Description |
+| Option | Default | Description |
 |---|---|---|
-| `title` | `Onglet N` | Titre de l'onglet |
-| `icon` | — | Icône (`mdi:…`) |
-| `color` | `accent_color` | Couleur de l'onglet |
-| `layout` | `vertical` | `vertical` (empilées), `horizontal` (côte à côte) ou `grid` |
-| `columns` | `2` | Nombre de colonnes en disposition `grid` |
-| `cards` | `[]` | Cartes affichées dans l'onglet |
+| `title` | `Tab N` | Tab title |
+| `icon` | — | Icon (`mdi:…`) |
+| `color` | `accent_color` | Tab color |
+| `layout` | `vertical` | `vertical` (stacked), `horizontal` (side by side) or `grid` |
+| `columns` | `2` | Number of columns in `grid` layout |
+| `cards` | `[]` | Cards shown in the tab |
 
-Les couleurs acceptent les couleurs du thème Home Assistant (`red`, `amber`, `primary`…) ou toute couleur CSS
-(`"#5291CE"`, `"rgb(0 128 0)"`, `"var(--my-color)"`). Le texte des onglets remplis passe automatiquement
-en clair ou foncé selon la couleur.
+Colors accept Home Assistant theme colors (`red`, `amber`, `primary`…) or any CSS color
+(`"#5291CE"`, `"rgb(0 128 0)"`, `"var(--my-color)"`). The text of filled tabs automatically switches
+to light or dark depending on the color.
 
 ```yaml
 type: custom:customizable-tab-card
 style: pills
 alignment: stretch
 tabs:
-  - title: Salon
+  - title: Living room
     icon: mdi:sofa
     color: amber
     cards:
       - type: tile
-        entity: light.salon
-  - title: Météo
+        entity: light.living_room
+  - title: Weather
     icon: mdi:weather-partly-cloudy
     color: "#5291CE"
     layout: grid
     columns: 2
     cards:
       - type: weather-forecast
-        entity: weather.maison
+        entity: weather.home
       - type: sensor
-        entity: sensor.temperature_exterieure
+        entity: sensor.outdoor_temperature
 ```
 
-Les cartes d'un onglet ne sont créées qu'à sa première ouverture.
+A tab's cards are only created the first time it is opened.
 
-`test/preview.html` permet de prévisualiser la carte et l'éditeur hors de Home Assistant avec des cartes fictives.
+`test/preview.html` previews the card and the editor outside Home Assistant with mock cards.
