@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Tab card preview</title>
+<style>
+  body { font-family: Roboto, sans-serif; background: #f0f0f0; margin: 0; padding: 16px; color: #212121;
+    --primary-color: #03a9f4; --text-primary-color: #fff; --primary-text-color: #212121; --secondary-text-color: #727272;
+    --divider-color: rgba(0,0,0,.12); --secondary-background-color: #e8e8e8; --card-background-color: #fff;
+    --red-color: #f44336; --amber-color: #ffc107; --green-color: #4caf50; --purple-color: #926bc7; --error-color: #db4437; }
+  h2 { font-size: 1rem; margin: 24px 0 8px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 16px; }
+  .edit { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+  .panel { background: #fff; border-radius: 12px; padding: 16px; }
+  ha-card { display: block; background: #fff; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,.15); }
+  ha-icon { display: inline-block; width: var(--mdc-icon-size, 24px); height: var(--mdc-icon-size, 24px); background: currentColor; border-radius: 50%; opacity: .7; }
+  .fake { padding: 16px; } .fake b { display: block; margin-bottom: 4px; }
+  pre { font-size: 12px; background: #263238; color: #eee; padding: 12px; border-radius: 8px; overflow: auto; max-height: 400px; }
+  .form label { display: block; margin: 6px 0; font-size: 13px; } .form input, .form select { margin-left: 6px; }
+  @media (max-width: 700px) { .edit { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<script>
+  // Stubs minimaux des éléments Home Assistant
+  customElements.define("ha-card", class extends HTMLElement {});
+  customElements.define("ha-icon", class extends HTMLElement {});
+  customElements.define("fake-card", class extends HTMLElement {
+    setConfig(c) { this.innerHTML = `<ha-card class="fake"><b>${c.title || c.type}</b>${c.content || ""}</ha-card>`; }
+    set hass(h) {}
+    getCardSize() { return 2; }
+  });
+  window.loadCardHelpers = async () => ({
+    createCardElement(conf) {
+      if (conf.type === "vertical-stack") {
+        if (!customElements.get("hui-vertical-stack-card")) {
+          customElements.define("hui-vertical-stack-card", class extends HTMLElement {
+            static async getConfigElement() { defineEditorStubs(); }
+          });
+        }
+        return document.createElement("hui-vertical-stack-card");
+      }
+      const el = document.createElement("fake-card");
+      el.setConfig(conf);
+      return el;
+    },
+  });
+
+  // ha-form simplifié : un champ natif par sélecteur
+  customElements.define("ha-form", class extends HTMLElement {
+    set data(d) { this._data = d; this._r(); }
+    set schema(s) { this._schema = s; this._r(); }
+    _r() {
+      if (!this._data || !this._schema) return;
+      const flat = this._schema.flatMap((s) => s.schema || [s]);
+      this.className = "form";
+      this.innerHTML = flat.map((s) => {
+        const v = this._data[s.name], sel = s.selector, label = this.computeLabel(s);
+        if (sel.select) return `<label>${label}<select name="${s.name}">${sel.select.options.map((o) => `<option value="${o.value}" ${o.value === v ? "selected" : ""}>${o.label}</option>`).join("")}</select></label>`;
+        if (sel.boolean) return `<label><input type="checkbox" name="${s.name}" ${v ? "checked" : ""}>${label}</label>`;
+        if (sel.number) return `<label>${label}<input type="number" name="${s.name}" value="${v ?? ""}"></label>`;
+        return `<label>${label}<input name="${s.name}" value="${v ?? ""}"></label>`;
+      }).join("");
+      this.querySelectorAll("[name]").forEach((el) => el.addEventListener("change", () => {
+        const value = { ...this._data };
+        value[el.name] = el.type === "checkbox" ? el.checked : el.type === "number" ? Number(el.value) : el.value || undefined;
+        this.dispatchEvent(new CustomEvent("value-changed", { detail: { value }, bubbles: true, composed: true }));
+      }));
+    }
+  });
+
+  function defineEditorStubs() {
+    customElements.define("hui-card-picker", class extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `<div style="padding:8px;border:1px dashed #aaa;border-radius:8px">Sélecteur de carte :
+          ${["markdown", "tile", "weather-forecast"].map((t) => `<button data-t="${t}">${t}</button>`).join(" ")}</div>`;
+        this.querySelectorAll("button").forEach((b) => b.onclick = () =>
+          this.dispatchEvent(new CustomEvent("config-changed", { detail: { config: { type: b.dataset.t, title: `Nouvelle ${b.dataset.t}` } }, bubbles: true, composed: true })));
+      }
+    });
+    customElements.define("hui-card-element-editor", class extends HTMLElement {
+      set value(v) {
+        this._v = v;
+        this.innerHTML = `<textarea style="width:100%;height:80px;box-sizing:border-box">${JSON.stringify(v, null, 1)}</textarea>`;
+        this.querySelector("textarea").onchange = (e) => {
+          try { this.dispatchEvent(new CustomEvent("config-changed", { detail: { config: JSON.parse(e.target.value) }, bubbles: true, composed: true })); } catch (err) {}
+        };
+      }
+      toggleMode() { this._gui = !this._gui; this.dispatchEvent(new CustomEvent("GUImode-changed", { detail: { guiMode: !this._gui, guiModeAvailable: true }, bubbles: true, composed: true })); }
+    });
+  }
+</script>
+<script src="../customizable-tab-card.js"></script>
+
+<h2>Éditeur (à gauche) + prévisualisation (à droite)</h2>
+<div class="edit">
+  <div class="panel" id="editorHost"></div>
+  <div>
+    <hui-card-preview id="previewHost"></hui-card-preview>
+    <pre id="yaml"></pre>
+  </div>
+</div>
+
+<h2>Styles</h2>
+<div class="grid" id="gallery"></div>
+
+<script>
+  const card = (title, content) => ({ type: "markdown", title, content });
+  const sample = [
+    { title: "Salon", icon: "mdi:sofa", cards: [card("Salon", "Lumières, volets, TV"), card("Climat", "21,5 °C")] },
+    { title: "Cuisine", icon: "mdi:silverware-fork-knife", color: "amber", cards: [card("Cuisine", "Four, hotte")] },
+    { title: "Jardin", icon: "mdi:flower", color: "green", layout: "grid", columns: 2, cards: [card("Arrosage", "Zone 1"), card("Arrosage", "Zone 2")] },
+    { title: "Alarme", icon: "mdi:shield-home", color: "red", cards: [] },
+  ];
+  const hass = { states: {} };
+  const configs = [
+    { tabs: sample },
+    { style: "pills", alignment: "stretch", tabs: sample },
+    { style: "segmented", display: "icon_above", tabs: sample },
+    { style: "boxed", tint_inactive: true, tabs: sample },
+    { style: "pills", tint_inactive: true, display: "icon", size: "large", alignment: "center", tabs: sample },
+    { style: "underline", position: "left", accent_color: "purple", tabs: sample },
+    { style: "segmented", position: "bottom", animation: "slide", card_background: true, bar_background: "#263238", inactive_color: "#b0bec5", tabs: sample },
+    { style: "boxed", position: "right", tabs: sample },
+  ];
+  configs.forEach((c) => {
+    const el = document.createElement("customizable-tab-card");
+    el.setConfig({ type: "custom:customizable-tab-card", ...c });
+    el.hass = hass;
+    document.getElementById("gallery").appendChild(el);
+  });
+
+  // Simule le dialogue d'édition : l'éditeur émet config-changed, la prévisualisation reçoit setConfig
+  let current = { type: "custom:customizable-tab-card", tabs: sample.slice(0, 2) };
+  const preview = document.createElement("customizable-tab-card");
+  preview.setConfig(current);
+  preview.hass = hass;
+  document.getElementById("previewHost").appendChild(preview);
+  const editor = document.createElement("customizable-tab-card-editor");
+  editor.hass = hass;
+  editor.lovelace = {};
+  editor.setConfig(current);
+  document.getElementById("editorHost").appendChild(editor);
+  document.getElementById("yaml").textContent = JSON.stringify(current, null, 2);
+  editor.addEventListener("config-changed", (ev) => {
+    current = ev.detail.config;
+    document.getElementById("yaml").textContent = JSON.stringify(current, null, 2);
+    setTimeout(() => { preview.setConfig(current); editor.setConfig(current); });
+  });
+</script>
+</body>
+</html>
