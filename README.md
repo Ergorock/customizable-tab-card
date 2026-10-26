@@ -6,8 +6,17 @@ styles et couleurs des onglets.
 
 ## Installation
 
-Ajoutez `customizable-tab-card.js` comme ressource de tableau de bord (type **module JavaScript**).
-Après une mise à jour du code, remplacez la ressource puis faites un rafraîchissement forcé du navigateur (Ctrl+Maj+R).
+### HACS (dépôt personnalisé)
+
+1. HACS → menu ⋮ → *Dépôts personnalisés* → ajoutez `https://github.com/Ergorock/customizable-tab-card`, catégorie **Dashboard**.
+2. Installez **Customizable Tab Card**, puis rechargez le navigateur.
+
+### Manuelle
+
+1. Copiez `customizable-tab-card.js` dans `config/www/customizable-tab-card.js`.
+2. *Paramètres → Tableaux de bord → ⋮ → Ressources* : ajoutez `/local/customizable-tab-card.js?v=1.0.0` (type *Module JavaScript*).
+
+Après une mise à jour, faites un rafraîchissement forcé du navigateur (Ctrl+Maj+R).
 
 ## Utilisation
 

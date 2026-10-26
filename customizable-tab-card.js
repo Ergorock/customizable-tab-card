@@ -943,15 +943,17 @@ const EDITOR_STYLES = `
   .msg { padding: 12px; color: var(--secondary-text-color); font-style: italic; }
 `;
 
-customElements.define("customizable-tab-card", TabCard);
-customElements.define("customizable-tab-card-editor", TabCardEditor);
+if (!customElements.get("customizable-tab-card")) customElements.define("customizable-tab-card", TabCard);
+if (!customElements.get("customizable-tab-card-editor")) customElements.define("customizable-tab-card-editor", TabCardEditor);
 
 window.customCards = window.customCards || [];
-window.customCards.push({
-  type: "customizable-tab-card",
-  name: "Customizable Tab Card",
-  description: "Regroupe des cartes dans des onglets personnalisables (style, couleurs, icônes).",
-  preview: true,
-});
+if (!window.customCards.some((c) => c.type === "customizable-tab-card")) {
+  window.customCards.push({
+    type: "customizable-tab-card",
+    name: "Customizable Tab Card",
+    description: "Regroupe des cartes dans des onglets personnalisables (style, couleurs, icônes).",
+    preview: true,
+  });
+}
 
 console.info(`%c CUSTOMIZABLE-TAB-CARD %c v${CARD_VERSION} `, "background:#03a9f4;color:#fff;font-weight:700", "");
