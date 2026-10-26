@@ -8,6 +8,16 @@ styles et couleurs des onglets.
 
 L'interface est disponible en français et en anglais (elle suit la langue de Home Assistant).
 
+## Captures d'écran
+
+![Barre d'onglets](https://raw.githubusercontent.com/Ergorock/customizable-tab-card/main/images/tab-bar.png)
+
+![Onglets regroupant d'autres cartes](https://raw.githubusercontent.com/Ergorock/customizable-tab-card/main/images/dashboard.webp)
+
+![Éditeur visuel : onglets](https://raw.githubusercontent.com/Ergorock/customizable-tab-card/main/images/editor-tabs.png)
+
+![Éditeur visuel : apparence](https://raw.githubusercontent.com/Ergorock/customizable-tab-card/main/images/editor-appearance.png)
+
 ## Installation
 
 ### HACS (dépôt personnalisé)

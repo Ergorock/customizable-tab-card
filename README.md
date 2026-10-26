@@ -8,6 +8,16 @@ tab styles and colors.
 
 The interface is available in English and French (it follows the Home Assistant language).
 
+## Screenshots
+
+![Tab bar](https://raw.githubusercontent.com/Ergorock/customizable-tab-card/main/images/tab-bar.png)
+
+![Tabs wrapping other cards](https://raw.githubusercontent.com/Ergorock/customizable-tab-card/main/images/dashboard.webp)
+
+![Visual editor: tabs](https://raw.githubusercontent.com/Ergorock/customizable-tab-card/main/images/editor-tabs.png)
+
+![Visual editor: appearance](https://raw.githubusercontent.com/Ergorock/customizable-tab-card/main/images/editor-appearance.png)
+
 ## Installation
 
 ### HACS (custom repository)
